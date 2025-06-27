@@ -1,0 +1,44 @@
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Login to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}"
+          channelId: live
+          projectId: things-to-complete
+
+      - name: Deploy to Firebase
+        run: firebase deploy --only hosting --non-interactive
+        env:
+          FIREBASE_TOKEN: "${{ secrets.FIREBASE_TOKEN }}"
