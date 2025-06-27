@@ -49,8 +49,3 @@ const count = ref(0)
   </div>
 </template>
 
-<style scoped>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-</style>
