@@ -42,7 +42,7 @@ jobs:
           projectId: things-to-complete
 
       - name: Deploy Functions
-        uses: aronep6/action-functions-deploy@1.0.0
+        uses: aronep6/action-functions-deploy@v1.0.0
         with:
           serviceAccountKey: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}"
           projectId: things-to-complete
