@@ -40,3 +40,11 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}"
           channelId: live
           projectId: things-to-complete
+
+      - name: Deploy Functions
+        run: |
+          npm install -g firebase-tools
+          firebase deploy --only functions
+        env:
+          FIREBASE_TOKEN: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}"
+          FIREBASE_PROJECT_ID: things-to-complete
