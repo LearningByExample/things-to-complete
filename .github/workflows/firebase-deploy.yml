@@ -42,11 +42,7 @@ jobs:
           projectId: things-to-complete
 
       - name: Deploy Functions
-        run: |
-          npm install -g firebase-tools
-          echo $FIREBASE_SERVICE_ACCOUNT > ./firebase-service-account.json}
-          firebase login:ci --service-account=./firebase-service-account.json
-          firebase deploy --only functions
-        env:
-          FIREBASE_SERVICE_ACCOUNT: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}"
-          FIREBASE_PROJECT_ID: things-to-complete
+        uses: aronep6/action-functions-deploy@1.0.0
+        with:
+          serviceAccountKey: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}"
+          projectId: things-to-complete
