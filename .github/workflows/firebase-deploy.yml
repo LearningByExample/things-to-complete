@@ -49,6 +49,6 @@ jobs:
         run: |
           npm install -g firebase-tools
           echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}" > service-account.json
-          firebase login:ci --no-localhost --project things-to-complete
+          firebase use --add things-to-complete
           firebase deploy --only functions
           rm service-account.json
