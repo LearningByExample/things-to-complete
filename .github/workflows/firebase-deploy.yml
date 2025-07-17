@@ -13,6 +13,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+      PROJECT_ID: things-to-complete
 
     steps:
       - uses: actions/checkout@v3
@@ -27,6 +30,9 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
       - name: Install Frontend dependencies
         run: pnpm install
 
@@ -39,16 +45,16 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}"
           channelId: live
-          projectId: things-to-complete
+          projectId: ${{ env.PROJECT_ID }}
 
       - name: Install Functions dependencies
         run: npm install
         working-directory: ./functions
 
-      - name: Deploy Functions
+      - uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ env.GOOGLE_APPLICATION_CREDENTIALS }}'
+
+      - name: Deploy functions
         run: |
-          npm install -g firebase-tools
-          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" > service-account.json
-          GOOGLE_APPLICATION_CREDENTIALS="service-account.json" firebase use things-to-complete
-          GOOGLE_APPLICATION_CREDENTIALS="service-account.json" firebase deploy --only functions
-          rm service-account.json
+          firebase deploy -f --only functions --project ${{ env.PROJECT_ID }}
