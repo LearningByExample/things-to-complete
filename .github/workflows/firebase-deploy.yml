@@ -27,10 +27,10 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: Install dependencies
+      - name: Install Frontend dependencies
         run: pnpm install
 
-      - name: Build
+      - name: Build Frontend
         run: pnpm run build
 
       - name: Deploy Frontend to Firebase Hosting
@@ -41,6 +41,10 @@ jobs:
           channelId: live
           projectId: things-to-complete
 
+      - name: Install Functions dependencies
+        run: npm install
+        working-directory: ./functions
+		  
       - name: Deploy Functions
         uses: Ktoxcon/action-cloud-functions-deploy@0.1.0
         with:
