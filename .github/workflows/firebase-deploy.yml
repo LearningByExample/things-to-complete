@@ -42,7 +42,9 @@ jobs:
           projectId: things-to-complete
 
       - name: Deploy Functions
-        uses: aronep6/action-functions-deploy@v1.0.0
+        uses: Ktoxcon/action-cloud-functions-deploy@0.1.0
         with:
-          serviceAccountKey: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}"
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}"
+          channelId: live		  
           projectId: things-to-complete
