@@ -52,5 +52,5 @@ jobs:
           npm install -g firebase-tools
           echo "$FIREBASE_SERVICE_ACCOUNT_KEY" > service-account.json
           export GOOGLE_APPLICATION_CREDENTIALS="service-account.json"
-          firebase deploy --only functions --project things-to-complete
+          firebase deploy --only functions --project things-to-complete --service-account-email="things-to-complete@appspot.gserviceaccount.com"
           rm service-account.json
