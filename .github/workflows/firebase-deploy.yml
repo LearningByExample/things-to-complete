@@ -45,10 +45,14 @@ jobs:
         run: npm install
         working-directory: ./functions
 
-      - name: Deploy Functions
+      - name: Deploy `helloWorld` Function
         uses: google-github-actions/deploy-cloud-functions@v1
         with:
+          name: helloWorld
+          description: Firebase Cloud Function - Hello World
           project_id: things-to-complete
           service_account_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}
           region: us-central1
           source_dir: ./functions
+          runtime: nodejs18
+          entry_point: helloWorld
