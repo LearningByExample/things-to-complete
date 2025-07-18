@@ -25,12 +25,6 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm@~10.12
 
-      - name: Setup Node.js using pnpm
-        uses: actions/setup-node@v2
-        with:
-          node-version: '23.10'
-          cache: 'pnpm'
-
       - name: Install Firebase CLI
         run: npm install -g firebase-tools@~14.11            
 
