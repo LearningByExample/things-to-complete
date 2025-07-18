@@ -13,19 +13,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}
-      PROJECT_ID: things-to-complete
 
     steps:
       - uses: actions/checkout@v3
-
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: '20'
-      #     cache: 'pnpm'
-      #     cache-dependency-path: pnpm-lock.yaml
 
       - name: Install pnpm
         run: npm install -g pnpm
@@ -36,25 +26,21 @@ jobs:
       - name: Install Frontend dependencies
         run: pnpm install
 
+      - uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THINGS_TO_COMPLETE }}
+
       - name: Build Frontend
         run: pnpm run build
 
       - name: Deploy Frontend to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ env.SERVICE_ACCOUNT_KEY }}
-          channelId: live
-          projectId: ${{ env.PROJECT_ID }}
+        run: |
+          firebase deploy -f --only hosting --project things-to-complete
 
       - name: Install Functions dependencies
         run: npm install
         working-directory: ./functions
 
-      - uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: ${{ env.SERVICE_ACCOUNT_KEY }}
-
       - name: Deploy functions
         run: |
-          firebase deploy -f --only functions --project ${{ env.PROJECT_ID }}
+          firebase deploy -f --only functions --project things-to-complete
