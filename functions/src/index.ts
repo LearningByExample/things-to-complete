@@ -15,7 +15,7 @@ import * as express from "express";
 // https://firebase.google.com/docs/functions/typescript
 
 export const helloWorld = onRequest(
-  {cors: [/^https:\/\/things-to-complete\.web\.app\/.*/]},
+  {cors: true},
   (request: express.Request, response: express.Response) => {
     logger.info("Hello logs!", {structuredData: true});
     response
