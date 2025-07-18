@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js for pnpm
         uses: actions/setup-node@v2
         with:
-          node-version: '23.10'
+          node-version: '22.17'
 
       - name: Install pnpm
         run: npm install -g pnpm@~10.12
