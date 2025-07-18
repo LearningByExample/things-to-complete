@@ -17,7 +17,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js for pnpm
+        uses: actions/setup-node@v2
+        with:
+          node-version: '23.10'
+
+      - name: Install pnpm
+        run: npm install -g pnpm@~10.12
+
+      - name: Setup Node.js using pnpm
         uses: actions/setup-node@v2
         with:
           node-version: '23.10'
@@ -26,11 +34,8 @@ jobs:
             'pnpm-lock.yaml'
             'functions/pnpm-lock.yaml'
 
-      - name: Install pnpm
-        run: npm install -g pnpm@~10.12
-
       - name: Install Firebase CLI
-        run: npm install -g firebase-tools@~14.11
+        run: npm install -g firebase-tools@~14.11            
 
       - name: Install Frontend dependencies
         run: pnpm install
