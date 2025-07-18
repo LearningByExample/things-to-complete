@@ -43,7 +43,7 @@ jobs:
           firebase deploy -f --only hosting --project things-to-complete
 
       - name: Install Functions dependencies
-        run: pnpm install
+        run: npm install
         working-directory: ./functions
 
       - name: Deploy functions

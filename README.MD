@@ -1,5 +1,6 @@
 https://things-to-complete.web.app/
 
+needs node 23.10.+
 
 needs pnpm 10.12.+
 ```bash
